@@ -34,7 +34,14 @@ const PointModel = (sequelize, DataTypes) => {
             foreignKey: 'userId',
             as: 'user',
         })
+        Point.belongsToMany(models.Raffle, {
+          through: 'RafflePoints', // Nome da tabela de junção
+          foreignKey: 'pointId',
+          otherKey: 'raffleId',
+          as: 'raffles',
+        });
     }
+
   
     return Point;
   };

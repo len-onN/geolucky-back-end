@@ -5,6 +5,7 @@ const express = require('express');
 const User = require('./controllers/user.controller');
 const Point = require('./controllers/point.controller');
 const Login = require('./controllers/login.controller');
+const Raffle = require('./controllers/raffle.controller');
 const validateJWT = require('./auth/validateJWT');
 require('./services/drawing.service');
 require('./services/drawingTest.service');
@@ -20,5 +21,6 @@ app.get('/user', User.getAll);
 app.post('/point', validateJWT, Point.newPoint);
 app.post('/point/check', Point.checkPointController)
 app.post('/login', Login.LoginController);
+app.get('/raffle', Raffle.getAllRaffles);
 
 module.exports = app;

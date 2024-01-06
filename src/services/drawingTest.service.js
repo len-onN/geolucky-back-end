@@ -3,21 +3,15 @@ const schedule = require('node-schedule');
 const geolib = require('geolib');
 const { User } = require('../models');
 const { Point } = require('../models');
+const { getRaffleDetails } = require('./raffles.service');
 
 const getRandomCoordinates = () => {
-  // Gera coordenadas aleatórias com 4 casas decimais de precisão
   const randomLat = parseFloat((Math.random() * (90 + 90) - 90).toFixed(8));
   const randomLng = parseFloat((Math.random() * (180 + 180) - 180).toFixed(8));
   return { latitude: 10, longitude: -5 };
 };
 
 const findClosestPoint = (randomCoords, points) => {
-  // Encontra o ponto mais próximo usando a biblioteca geolib
-  // const pointsT = points.map((point) => ({
-  //   latitude: point.lat,
-  //   longitude: point.lng,
-  //   userId: point.userId,
-  // }));
   const closestPoint = geolib.findNearest(randomCoords, points);
   return closestPoint;
 };
@@ -46,7 +40,7 @@ const executarConsulta = async () => {
   }
 };
 
-schedule.scheduleJob('15 38 16 * * 1', async () => {
+schedule.scheduleJob('12 28 14 * * 4', async () => {
   console.log('Tarefa agendada');
   
   const randomCoords = getRandomCoordinates();
@@ -60,4 +54,6 @@ schedule.scheduleJob('15 38 16 * * 1', async () => {
 
   const user = await User.findByPk(closestPoint.userId);
   console.log(user);
+  const rafflePointsDetails = await getRaffleDetails();
+  console.log(rafflePointsDetails);
 });
