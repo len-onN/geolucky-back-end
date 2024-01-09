@@ -28,6 +28,7 @@ const getRaffleDetails = async () => {
           winnerPointId: raffle.winnerPointId,
           drawnLat: raffle.drawnLat,
           drawnLng: raffle.drawnLng,
+          createdAt: raffle.createdAt,
           competingPoints: raffle.competingPoints.map((point) => ({
             id: point.id,
             lat: point.lat,

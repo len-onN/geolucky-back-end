@@ -1,4 +1,7 @@
 const { User } = require('../models');
+const secret = process.env.JWT_SECRET;
+const jwt = require('jsonwebtoken');
+const transporter = require('../utils/email');
 
 const getAll = async () => {
     const users = await User.findAll({ attributes: { exclude: ['password'] } });
@@ -6,12 +9,19 @@ const getAll = async () => {
 };
 
 const getUserById = async (userId) => {
-    console.log(typeof userId === 'string')
-    // res.header("Access-Control-Allow-Origin", "*");
-    // res.header("Access-Control-Allow-Headers", "Origin, X-Request-With, Content-Type, Accept");
+    console.log("tipo", typeof userId, userId)
     try {
-        const users = await User.findByPk(userId);
-        return users;
+        const user = await User.findByPk(userId);
+        // let newToken = "";
+        if (user && !user.isConfirmed) {
+            try {
+                const tokenValid = jwt.verify(user.token, secret);
+                return {user, token: 'valid'};
+            } catch (error) {
+                return {user, token: 'invalid'};
+            }
+        } 
+        return {user, token: ''};
     }
     catch (err) {
         console.log(err);
@@ -23,9 +33,7 @@ const newUser = async ({fullName, email, password }) => {
     try {
         const users = await getAll();
         for (const user of users) {
-            if (user.fullName === fullName) {
-                return { message: "nome já registrado" };
-            } else if (user.email === email) {
+            if (user.email === email) {
                 return { message: "email já registrado" };
             }
         }
@@ -33,14 +41,72 @@ const newUser = async ({fullName, email, password }) => {
     catch (e) {
         return { message: "Erro interno"};
     }
+    const token = jwt.sign({ email }, secret, {expiresIn: '1d'});
+    const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: 'Cadastro',
+        html: `<p>Clique no link para concluir seu cadastro: <a href="http://localhost:3000/confirm/${token}"> Confirmar </a></p>`,
+    }
     const newUser = await User.create({
-        fullName, email, password
+        fullName, email, password, token
     });
+    try {
+        await transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(info);
+            }
+        });
+    } catch (err) {
+        console.log(err);
+    }
     return newUser;
+}
+
+async function confirmUser ({ token }) {
+    const user = await User.findOne({where: { token }});
+    console.log("user:", user);
+    if (user) {
+        await User.update({ isConfirmed: true }, { where: { token }});
+        return user;
+    };
+    return null;
+};
+
+async function sendConfirmation(userId) {
+    console.log(typeof userId);
+    const { email } = await User.findByPk(userId);
+    const token = jwt.sign({ email }, secret, {expiresIn: '1d'});
+    const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: 'Cadastro',
+        html: `<p>Clique no link para concluir seu cadastro: <a href="http://localhost:3000/confirm/${token}"> Confirmar </a></p>`,
+    }
+    const newTokenUser = await User.update({
+        token
+    }, { where: { email }});
+    console.log(newTokenUser, "hahaha");
+    try {
+        await transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(info);
+            }
+        });
+    } catch (err) {
+        console.log(err);
+    }
+    return newTokenUser;
 }
 
 module.exports = {
     getAll,
     newUser,
     getUserById,
+    confirmUser,
+    sendConfirmation,
 }
