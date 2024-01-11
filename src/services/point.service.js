@@ -6,6 +6,11 @@ const newPoint = async ({ lat, lng, userId }) => {
     return newPoint;
 }
 
+const getAllPoints = async () => {
+    const allPoints = await Point.findAll();
+    return allPoints;
+};
+
 const checkPoint = async ({ userId }) => {
     const point = await Point.findOne({
         where: {
@@ -26,4 +31,5 @@ const checkPoint = async ({ userId }) => {
 module.exports = {
     newPoint,
     checkPoint,
+    getAllPoints,
 };

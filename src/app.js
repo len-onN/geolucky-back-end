@@ -19,6 +19,7 @@ app.use(cors());
 app.post('/user', User.newUser);
 app.get('/user', User.getAll);
 app.post('/confirm', User.confirmUser);
+app.get('/point', Point.getAllPoints);
 app.post('/sendconfirmation', User.sendConfirmation);
 app.post('/point', validateJWT, Point.newPoint);
 app.get('/user/:id', User.getUserById)

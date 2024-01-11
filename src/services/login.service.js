@@ -11,7 +11,7 @@ const LoginService = async ({ email, password }) => {
     const user = await User.findOne({ where: { email }  });
     const userId = user.id;
     if (user && user.password === password) {
-        const token = jwt.sign({ data: { userId: user.id } }, secret, jwtConfig);
+        const token = jwt.sign({ data: { userId } }, secret, jwtConfig);
         return { token, userId };
     } else {
         return { message: "dado de login inconsistente"};

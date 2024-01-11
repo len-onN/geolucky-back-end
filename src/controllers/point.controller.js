@@ -17,4 +17,9 @@ const checkPointController = async (req, res) => {
     return res.status(200).json(noPointBool);
 };
 
-module.exports = { newPoint, checkPointController };
+const getAllPoints = async (req, res) => {
+    const allPoints = await PointService.getAllPoints();
+    return res.status(200).json(allPoints);
+};
+
+module.exports = { newPoint, checkPointController, getAllPoints };

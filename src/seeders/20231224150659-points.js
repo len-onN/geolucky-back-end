@@ -10,7 +10,6 @@ module.exports = {
         lat: 12.05,
         lng: -30.00,
         user_id: 1,
-        // usamos a função CURRENT_TIMESTAMP do SQL para salvar a data e hora atual nos campos `createdAt` e `updatedAt`
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
         updated_at: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
@@ -18,7 +17,6 @@ module.exports = {
         lat: 22.05,
         lng: -10.00,
         user_id: 2,
-        // usamos a função CURRENT_TIMESTAMP do SQL para salvar a data e hora atual nos campos `createdAt` e `updatedAt`
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
         updated_at: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
@@ -26,7 +24,6 @@ module.exports = {
         lat: 28.25,
         lng: -20.00,
         user_id: 3,
-        // usamos a função CURRENT_TIMESTAMP do SQL para salvar a data e hora atual nos campos `createdAt` e `updatedAt`
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
         updated_at: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
@@ -34,7 +31,6 @@ module.exports = {
         lat: 42.05,
         lng: 20.00,
         user_id: 4,
-        // usamos a função CURRENT_TIMESTAMP do SQL para salvar a data e hora atual nos campos `createdAt` e `updatedAt`
         created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
         updated_at: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
