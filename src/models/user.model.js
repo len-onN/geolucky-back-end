@@ -5,12 +5,6 @@ const UserModel = (sequelize, DataTypes) => {
       fullName: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
-      token: DataTypes.STRING,
-      isConfirmed: {
-        allowNull: false,
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

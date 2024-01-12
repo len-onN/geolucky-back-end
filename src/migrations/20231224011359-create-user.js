@@ -28,15 +28,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      token: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      is_confirmed: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

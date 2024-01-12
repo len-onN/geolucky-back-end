@@ -19,8 +19,8 @@ const getUserById = async (req, res) => {
     const { id } = req.params;
     console.log("id:", parseInt(id));
     try {
-        const {user, token} = await UserService.getUserById(parseInt(id));
-        return res.status(200).json({user, token});
+        const user = await UserService.getUserById(parseInt(id));
+        return res.status(200).json(user);
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
@@ -41,15 +41,6 @@ const newUser = async (req, res) => {
     }
 }
 
-async function confirmUser(req, res) {
-    const { token } = req.body;
-    const user = await UserService.confirmUser({ token });
-    if (user) {
-        return res.status(200).json(user);
-    } else {
-        return res.status(500).json({ message: "user not foound" })
-    }
-};
 
 async function sendConfirmation(req, res) {
     const { userId } = req.body;
@@ -60,7 +51,6 @@ async function sendConfirmation(req, res) {
 module.exports = {
     getAll,
     newUser,
-    confirmUser,
     getUserById,
     sendConfirmation,
 };
