@@ -22,25 +22,25 @@ const getRaffleDetails = async () => {
 
     console.log(raffleDetails)
     // Formate os dados conforme necessário
-    const formattedArr = raffleDetails.map((raffle) => {
-        const formattedData = {
-          id: raffle.id,
-          winnerPointId: raffle.winnerPointId,
-          drawnLat: raffle.drawnLat,
-          drawnLng: raffle.drawnLng,
-          createdAt: raffle.createdAt,
-          competingPoints: raffle.competingPoints.map((point) => ({
-            id: point.id,
-            lat: point.lat,
-            lng: point.lng,
-            userId: point.userId,
-          })),
-        };
+    // const formattedArr = raffleDetails.map((raffle) => {
+    //     const formattedData = {
+    //       id: raffle.id,
+    //       winnerPointId: raffle.winnerPointId,
+    //       drawnLat: raffle.drawnLat,
+    //       drawnLng: raffle.drawnLng,
+    //       createdAt: raffle.createdAt,
+    //       competingPoints: raffle.competingPoints.map((point) => ({
+    //         id: point.id,
+    //         lat: point.lat,
+    //         lng: point.lng,
+    //         userId: point.userId,
+    //       })),
+    //     };
     
-        return formattedData;
+    //     return formattedData;
 
-    })
-    return formattedArr;
+    // })
+    return raffleDetails /* formattedArr*/;
   } catch (error) {
     console.error('Erro ao obter detalhes do sorteio:', error);
     throw error;
