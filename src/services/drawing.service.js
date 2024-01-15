@@ -18,15 +18,15 @@ const findClosestPoint = (randomCoords, points) => {
   return closestPoint;
 };
 
-const saveRaffleData = async (winnerPoint, competingPoints) => {
+const saveRaffleData = async (winnerPoint, randomCoords, competingPoints) => {
   console.log("data: ", winnerPoint);
   console.log("data: ", competingPoints);
   try {
     // Crie um novo registro na tabela Raffle
     const raffle = await Raffle.create({
       winnerPointId: winnerPoint.userId,
-      drawnLat: winnerPoint.lat,
-      drawnLng: winnerPoint.lng,
+      drawnLat: randomCoords.latitude,
+      drawnLng: randomCoords.longitude,
     });
 
     // Associe os pontos concorrentes a esse sorteio na tabela RafflePoints
@@ -72,7 +72,7 @@ const findWeekRafflePoints = async () => {
   }
 };
 
-schedule.scheduleJob('0 15 21 * * 6', async () => {
+schedule.scheduleJob('50 24 22 * * 6', async () => {
   console.log('Tarefa agendada');
 
   const randomCoords = getRandomCoordinates();
@@ -84,7 +84,7 @@ schedule.scheduleJob('0 15 21 * * 6', async () => {
     console.log('Ponto Mais Próximo:', closestPoint);
     // const user = await User.findByPk(closestPoint.userId);
     // console.log(user);
-    await saveRaffleData(closestPoint, points);
+    await saveRaffleData(closestPoint, randomCoords, points);
     if (points.length) {
       points.forEach((point) => console.log("email: ", point.user.email));
       async function sendEmail(point) {
