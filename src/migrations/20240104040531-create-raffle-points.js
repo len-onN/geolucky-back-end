@@ -27,15 +27,13 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false,
       },
-      created_at: {
-        allowNull: false,
+      drawn_start: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        allowNull: false,
       },
-      updated_at: {
-        allowNull: false,
+      drawn_end: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        allowNull: false,
       },
     });
   },

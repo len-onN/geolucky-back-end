@@ -14,15 +14,19 @@ const RaffleModel = (sequelize, DataTypes) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
-      createdAt: {
-        allowNull: false,
+      drawnStart: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+        allowNull: false,
+      },
+      drawnEnd: {
+        type: DataTypes.DATE,
+        allowNull: false,
       },
     },
     {
       underscored: true,
       tableName: 'raffles',
+      timestamps: false,
     });
   
     Raffle.associate = (models) => {

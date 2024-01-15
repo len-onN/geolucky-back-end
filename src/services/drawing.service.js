@@ -6,6 +6,17 @@ const { getRaffleDetails } = require('./raffles.service');
 const transporter = require('../utils/email');
 // const time = require('time');
 
+const generateWeekDates = () => {
+  const dataAtual = new Date();
+  const dataFinal = new Date(dataAtual);
+  dataFinal.setUTCHours(19, 59, 59, 999);
+  const dataInicial = new Date(dataFinal);
+  dataInicial.setUTCHours(20, 0, 0, 0);
+  dataInicial.setDate(dataFinal.getDate() - 6);
+
+  return { dataInicial, dataFinal };
+};
+
 const getRandomCoordinates = () => {
   const randomLat = parseFloat((Math.random() * (90 + 90) - 90).toFixed(8));
   const randomLng = parseFloat((Math.random() * (180 + 180) - 180).toFixed(8));
@@ -21,12 +32,18 @@ const findClosestPoint = (randomCoords, points) => {
 const saveRaffleData = async (winnerPoint, randomCoords, competingPoints) => {
   console.log("data: ", winnerPoint);
   console.log("data: ", competingPoints);
+  const { dataInicial, dataFinal } = generateWeekDates();
+  // const dataInicial = new Date();
+  // const dataFinal = new Date();
+  console.log(dataInicial, dataFinal);
   try {
     // Crie um novo registro na tabela Raffle
     const raffle = await Raffle.create({
       winnerPointId: winnerPoint.userId,
       drawnLat: randomCoords.latitude,
       drawnLng: randomCoords.longitude,
+      drawnStart: dataInicial,
+      drawnEnd: dataFinal,
     });
 
     // Associe os pontos concorrentes a esse sorteio na tabela RafflePoints
@@ -43,12 +60,7 @@ const saveRaffleData = async (winnerPoint, randomCoords, competingPoints) => {
 };
 
 const findWeekRafflePoints = async () => {
-  const dataAtual = new Date();
-  const dataFinal = new Date(dataAtual);
-  dataFinal.setUTCHours(19, 59, 59, 999);
-  const dataInicial = new Date(dataFinal);
-  dataInicial.setUTCHours(20, 0, 0, 0);
-  dataInicial.setDate(dataFinal.getDate() - 6);
+  const { dataInicial, dataFinal } = generateWeekDates();
 
   try {
     const results = await Point.findAll({
@@ -72,7 +84,7 @@ const findWeekRafflePoints = async () => {
   }
 };
 
-schedule.scheduleJob('50 24 22 * * 6', async () => {
+schedule.scheduleJob('53 48 11 * * 1', async () => {
   console.log('Tarefa agendada');
 
   const randomCoords = getRandomCoordinates();
