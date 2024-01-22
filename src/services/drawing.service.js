@@ -96,14 +96,14 @@ const findWeekRafflePoints = async () => {
   }
 };
 
-schedule.scheduleJob('45 45 15 * * 2', async () => {
+schedule.scheduleJob('55 59 19 * * 1', async () => {
   console.log('Tarefa agendada');
 
   const randomCoords = getRandomCoordinates();
   console.log('Coordenadas Aleatórias:', randomCoords);
   try {
     const points = await findWeekRafflePoints();
-    const closestPoint = findClosestPoint(randomCoords, points);
+    const closestPoint =  findClosestPoint(randomCoords, points);
     console.log('Ponto Mais Próximo:', closestPoint);
     await saveRaffleData(closestPoint, randomCoords, points);
     if (points.length) {

@@ -9,7 +9,7 @@ const Raffle = require('./controllers/raffle.controller');
 const Token = require('./controllers/token.controller');
 const validateJWT = require('./middlewares/validateJWT');
 require('./services/drawing.service');
-require('./services/drawingTest.service');
+// require('./services/drawingTest.service');
 const cors = require('cors');
 
 const app = express();
