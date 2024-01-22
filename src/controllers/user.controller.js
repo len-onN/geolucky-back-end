@@ -1,6 +1,6 @@
 const UserService = require('../services/user.service');
 
-const getAll = async (_req, res) => {
+const getAllController = async (_req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Request-With, Content-Type, Accept");
     try {
@@ -26,7 +26,7 @@ const getUserById = async (req, res) => {
     }
 };
 
-const newUser = async (req, res) => {
+const newUserController = async (req, res) => {
     console.log(req.body);
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Request-With, Content-Type, Accept");
@@ -42,15 +42,15 @@ const newUser = async (req, res) => {
 }
 
 
-async function sendConfirmation(req, res) {
+async function sendConfirmationController(req, res) {
     const { userId } = req.body;
     const response = await UserService.sendConfirmation(userId);
     return res.status(200).json(response);
 };
 
 module.exports = {
-    getAll,
-    newUser,
+    getAllController,
+    newUserController,
     getUserById,
-    sendConfirmation,
+    sendConfirmationController,
 };

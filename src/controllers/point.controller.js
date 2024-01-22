@@ -1,6 +1,6 @@
 const PointService = require('../services/point.service');
 
-const newPoint = async (req, res) => {
+const newPointController = async (req, res) => {
     try {
         const { lat, lng, userId } = req.body;
         const newPoint = await PointService.newPoint({ lat, lng, userId });
@@ -17,9 +17,9 @@ const checkPointController = async (req, res) => {
     return res.status(200).json(noPointBool);
 };
 
-const getAllPoints = async (req, res) => {
+const getAllPointsController = async (req, res) => {
     const allPoints = await PointService.getAllPoints();
     return res.status(200).json(allPoints);
 };
 
-module.exports = { newPoint, checkPointController, getAllPoints };
+module.exports = { newPointController, checkPointController, getAllPointsController };

@@ -18,14 +18,14 @@ app.use(cors());
 
 
 app.post('/login', Login.LoginController);
-app.post('/user', User.newUser);
-app.get('/user', User.getAll);
-app.post('/confirm', Token.confirmUserTokenController);
-app.get('/point', Point.getAllPoints);
-app.post('/point', validateJWT, Point.newPoint);
+app.post('/user', User.newUserController);
+app.get('/user', User.getAllController);
+app.patch('/confirm', Token.confirmUserTokenController);
+app.get('/point', Point.getAllPointsController);
+app.post('/point', validateJWT, Point.newPointController);
 app.post('/point/check', Point.checkPointController);
-app.post('/sendconfirmation', Token.sendConfirmationTokenController);
+app.patch('/sendconfirmation', Token.sendConfirmationTokenController);
 app.get('/token/:userId', Token.isUserTokenValidController);
-app.get('/raffle', Raffle.getAllRaffles);
+app.get('/raffle', Raffle.getAllRafflesController);
 
 module.exports = app;
